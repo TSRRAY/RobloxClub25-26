@@ -1,0 +1,28 @@
+-- Script for looping an animation on a rig
+
+local animationId = "rbxassetid://INSERT_ANIMATION_ID_HERE" -- Replace with your animation ID
+local rig = script.Parent
+
+-- Find the Animator (preferably inside a Humanoid)
+local humanoid = rig:FindFirstChildOfClass("Humanoid")
+if humanoid then
+    local animator = humanoid:FindFirstChildOfClass("Animator")
+    if not animator then
+        animator = Instance.new("Animator")
+        animator.Parent = humanoid
+    end
+
+    -- Create and load the Animation
+    local animation = Instance.new("Animation")
+    animation.AnimationId = animationId
+
+    local function playLoop()
+        local track = animator:LoadAnimation(animation)
+        track.Looped = true
+        track:Play()
+    end
+
+    playLoop()
+else
+    warn("No Humanoid found in rig!")
+end
